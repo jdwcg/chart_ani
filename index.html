@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>svg lin animation</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <section>
+      <h2>content</h2>
+    </section>
+    <div class="charts">
+      <div class="chart">
+        <h2 data-num="20">0</h2>
+        <svg>
+          <circle cx="110" cy="110" r="100"></circle>
+        </svg>
+      </div>
+      <div class="chart">
+        <h2 data-num="60">0</h2>
+        <svg>
+          <circle cx="110" cy="110" r="100"></circle>
+        </svg>
+      </div>
+      <div class="chart">
+        <h2 data-num="80">0</h2>
+        <svg>
+          <circle cx="110" cy="110" r="100"></circle>
+        </svg>
+      </div>
+      <div class="chart">
+        <h2 data-num="50">0</h2>
+        <svg>
+          <circle cx="110" cy="110" r="100"></circle>
+        </svg>
+      </div>
+    </div>
+    <section>
+      <h2>content</h2>
+    </section>
+    <script>
+      $(function () {
+        let charts = $(".charts");
+        let chart = $(".chart");
+        let chartOST = chart.offset().top - 700;
+
+        $(window).scroll(function () {
+          let currentSCT = $(this).scrollTop();
+          if (currentSCT >= chartOST) {
+            if (!charts.hasClass("active")) {
+              animateChart();
+              charts.addClass("active");
+            }
+          }
+        });
+
+        function animateChart() {
+          chart.each(function () {
+            let item = $(this);
+            let title = item.find("h2");
+            let targetNum = title.attr("data-num");
+            let circle = item.find("circle");
+
+            $({ rate: 0 }).animate(
+              { rate: targetNum },
+              {
+                duration: 1500,
+                progress: function () {
+                  let now = this.rate;
+
+                  console.log(now);
+                  let amout = 630 - (630 * now) / 100;
+                  title.text(Math.floor(now));
+                  circle.css({ strokeDashoffset: amout });
+                },
+              }
+            );
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
