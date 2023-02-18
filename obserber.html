@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      body {
+        background-color: black;
+      }
+      div {
+        margin-top: 1000px;
+        color: white;
+        text-align: center;
+        opacity: 0;
+        transition: all 0.5s;
+        transform: rotate(-720deg);
+        font-size: 3rem;
+      }
+    </style>
+    <div>아이폰</div>
+    <div>안드로이드</div>
+    <div>사과폰</div>
+    <div>에니 메이션</div>
+    <script>
+      let observer = new IntersectionObserver((e) => {
+        e.forEach((box) => {
+          if (box.isIntersecting) {
+            //  if (box.intersectionRatio) {
+            box.intersectionRatio = 0.5;
+            box.target.style.opacity = 1;
+            box.target.style.transform = "rotate(0deg)";
+          } else {
+            box.target.style.opacity = 0;
+            box.target.style.transform = "rotate(720deg)";
+          }
+        });
+      });
+
+      let div = document.querySelectorAll("div");
+      observer.observe(div[0]);
+      observer.observe(div[1]);
+      observer.observe(div[2]);
+      observer.observe(div[3]);
+    </script>
+  </body>
+</html>
